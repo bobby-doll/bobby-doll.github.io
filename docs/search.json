@@ -1,24 +1,17 @@
 [
   {
-    "objectID": "nfl_player_props_values.html",
-    "href": "nfl_player_props_values.html",
-    "title": "NFL Player Prop Values",
+    "objectID": "nfl_values.html",
+    "href": "nfl_values.html",
+    "title": "NFL Games",
     "section": "",
-    "text": "Latest NFL Player Prop values."
+    "text": "Latest on NFL games.\n*Note: The spread and total deltas are deltas compared to the line. A spread colored blue, means that site would make the line x points below the listed spread. For example, if the line is home team +3 and the spread delta is -6, then that means that site would make the line home team -3 and would gladly take the 3 points right now."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "betting",
+    "objectID": "nfl_player_props.html",
+    "href": "nfl_player_props.html",
+    "title": "NFL Player Props",
     "section": "",
-    "text": "This is very beta. I don’t really know what I’m doing.\nUse the tabs at the top for new data.\nI’m not responsible for lost money; I will take credit for winnings."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "Latest NFL Player Props."
   },
   {
     "objectID": "EPL.html",
@@ -28,10 +21,24 @@
     "text": "Latest English Premier League data."
   },
   {
-    "objectID": "nfl_player_props.html",
-    "href": "nfl_player_props.html",
-    "title": "NFL Player Props",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "Latest NFL Player Props."
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "betting",
+    "section": "",
+    "text": "This is very beta. I don’t really know what I’m doing on the tech side of things.\nThe point of this is to compare expert (supposedly) projections with current odds and exploit the differences.\nUse the tabs at the top for new data.\nI’m not responsible for lost money; I will take credit for winnings."
+  },
+  {
+    "objectID": "nfl_player_props_values.html",
+    "href": "nfl_player_props_values.html",
+    "title": "NFL Player Prop Values",
+    "section": "",
+    "text": "Latest NFL Player Prop values."
   }
 ]

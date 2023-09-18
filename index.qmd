@@ -2,7 +2,9 @@
 title: "betting"
 ---
 
-This is very beta. I don't really know what I'm doing.
+This is very beta. I don't really know what I'm doing on the tech side of things.
+
+The point of this is to compare expert (supposedly) projections with current odds and exploit the differences.
 
 Use the tabs at the top for new data.
 

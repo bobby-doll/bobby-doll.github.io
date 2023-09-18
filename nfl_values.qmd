@@ -1,0 +1,14 @@
+---
+title: "NFL Games" 
+execute:
+  echo: false
+---
+
+Latest on NFL games.
+
+\*Note: The spread and total deltas are deltas compared to the line. A spread colored blue, means that site would make the line x points below the listed spread. For example, if the line is home team +3 and the spread delta is -6, then that means that site would make the line home team -3 and would gladly take the 3 points right now.
+
+```{r}
+img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/NFL_Game_Values.png"  
+knitr::include_graphics(img_url)
+```
