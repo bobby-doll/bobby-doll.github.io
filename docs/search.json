@@ -12,5 +12,12 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "EPL.html",
+    "href": "EPL.html",
+    "title": "EPL",
+    "section": "",
+    "text": "Latest English Premier League data.\n\nimg_url &lt;- \"https://raw.githubusercontent.com/bdidds2/Betting/main/EPL.png\"\nknitr::include_graphics(img_url)"
   }
 ]
