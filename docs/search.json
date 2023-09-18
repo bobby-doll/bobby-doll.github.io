@@ -1,10 +1,17 @@
 [
   {
+    "objectID": "nfl_player_props_values.html",
+    "href": "nfl_player_props_values.html",
+    "title": "NFL Player Prop Values",
+    "section": "",
+    "text": "Latest NFL Player Prop values."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "betting",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "This is very beta. I don’t really know what I’m doing.\nUse the tabs at the top for new data.\nI’m not responsible for lost money; I will take credit for winnings."
   },
   {
     "objectID": "about.html",
@@ -18,6 +25,13 @@
     "href": "EPL.html",
     "title": "EPL",
     "section": "",
-    "text": "Latest English Premier League data.\n\nimg_url &lt;- \"https://raw.githubusercontent.com/bdidds2/Betting/main/EPL.png\"\nknitr::include_graphics(img_url)"
+    "text": "Latest English Premier League data."
+  },
+  {
+    "objectID": "nfl_player_props.html",
+    "href": "nfl_player_props.html",
+    "title": "NFL Player Props",
+    "section": "",
+    "text": "Latest NFL Player Props."
   }
 ]

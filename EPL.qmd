@@ -1,5 +1,7 @@
 ---
 title: "EPL"
+execute:
+  echo: false
 ---
 
 Latest English Premier League data.

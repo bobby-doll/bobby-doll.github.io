@@ -2,10 +2,8 @@
 title: "betting"
 ---
 
-This is a Quarto website.
+This is very beta. I don't really know what I'm doing.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Use the tabs at the top for new data.
 
-```{r}
-1 + 1
-```
+I'm not responsible for lost money; I will take credit for winnings.

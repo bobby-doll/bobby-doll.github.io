@@ -1,0 +1,12 @@
+---
+title: "NFL Player Prop Values"
+execute:
+  echo: false
+---
+
+Latest NFL Player Prop values.
+
+```{r}
+img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/NFL_Player_Prop_Values.png" 
+knitr::include_graphics(img_url)
+```
