@@ -1,0 +1,10 @@
+---
+title: "EPL"
+---
+
+Latest English Premier League data.
+
+```{r}
+img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/EPL.png"
+knitr::include_graphics(img_url)
+```
