@@ -16,6 +16,7 @@ Orange total means bet the over as the system thinks the over is undervalued.
 
 Blue total means bet the under as the system thinks the under is undervalued.
 
+
 ```{r}
 img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/NFL_Game_Values.png"  
 knitr::include_graphics(img_url)
