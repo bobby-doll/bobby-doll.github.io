@@ -6,7 +6,7 @@ execute:
 
 Latest on NFL games.
 
-\*Note: The spread and total deltas are deltas compared to the line. 
+\*Note: The spread and total deltas are deltas compared to the line.
 
 Purple spread means bet the favorite as the system thinks the favorite is undervalued.
 
@@ -15,7 +15,6 @@ Green spread means bet the underdog as the system thinks the underdog is underva
 Orange total means bet the over as the system thinks the over is undervalued.
 
 Blue total means bet the under as the system thinks the under is undervalued.
-
 
 ```{r}
 img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/NFL_Game_Values.png"  

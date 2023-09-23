@@ -4,7 +4,7 @@
     "href": "nfl_values.html",
     "title": "NFL Games",
     "section": "",
-    "text": "Latest on NFL games.\n*Note: The spread and total deltas are deltas compared to the line. A spread colored blue, means that site would make the line x points below the listed spread. For example, if the line is home team +3 and the spread delta is -6, then that means that site would make the line home team -3 and would gladly take the 3 points right now."
+    "text": "Latest on NFL games.\n*Note: The spread and total deltas are deltas compared to the line.\nPurple spread means bet the favorite as the system thinks the favorite is undervalued.\nGreen spread means bet the underdog as the system thinks the underdog is undervalued.\nOrange total means bet the over as the system thinks the over is undervalued.\nBlue total means bet the under as the system thinks the under is undervalued."
   },
   {
     "objectID": "nfl_player_props.html",
