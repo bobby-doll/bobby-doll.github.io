@@ -1,5 +1,5 @@
 ---
-title: "EPL"
+title: "Soccer"
 execute:
   echo: false
 ---
@@ -8,5 +8,12 @@ Latest English Premier League data.
 
 ```{r}
 img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/EPL.png"
+knitr::include_graphics(img_url)
+```
+
+Latest Bundesliga data.
+
+```{r}
+img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/Bundesliga.png"
 knitr::include_graphics(img_url)
 ```
