@@ -1,12 +1,22 @@
 ---
-title: "NFL Player Props" 
-execute:
-  echo: false
+title: "NFL Player Props"
+output:
+  quarto::html_document:
+    self_contained: false
 ---
 
 Latest NFL Player Props.
 
-```{r}
-img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/NFL_Player_Props_All.png"  
-knitr::include_graphics(img_url)
+```{r, echo=FALSE}
+library(htmltools)
+
+html <- includeHTML("https://raw.githubusercontent.com/bdidds2/Betting/main/NFL_Player_Props_All.html")
+
+html <- tags$div(
+  html,
+  style = "width: 100%;"
+)
+
+html
+
 ```
