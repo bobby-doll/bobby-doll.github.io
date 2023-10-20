@@ -17,3 +17,10 @@ Latest Bundesliga data.
 img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/Bundesliga.png"
 knitr::include_graphics(img_url)
 ```
+
+Latest La Liga data.
+
+```{r}
+img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/LaLiga.png"
+knitr::include_graphics(img_url)
+```
