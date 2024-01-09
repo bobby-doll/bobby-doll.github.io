@@ -1,0 +1,19 @@
+---
+title: "NBA Player Props"
+output:
+  quarto::html_document:
+    self_contained: false
+---
+
+```{r, echo=FALSE}
+library(htmltools)
+
+html <- includeHTML("https://raw.githubusercontent.com/bdidds2/Betting/main/NBA_player_props.html")
+
+html <- tags$div(
+  html,
+  style = "width: 100%;"
+)
+
+html
+```
