@@ -8,7 +8,7 @@ output:
 ```{r, echo=FALSE}
 library(htmltools)
 
-html <- includeHTML("https://raw.githubusercontent.com/bdidds2/Betting/main/NBA_player_props.html")
+html <- includeHTML("https://raw.githubusercontent.com/bdidds2/Betting/main/nba_player_props.html")
 
 html <- tags$div(
   html,
