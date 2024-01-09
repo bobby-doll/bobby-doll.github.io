@@ -1,8 +1,9 @@
 ---
 title: "NBA Player Props"
-output:
-  quarto::html_document:
-    self_contained: false
+format:
+  html:
+    embed-resources: true
+standalone: true
 ---
 
 ```{r, echo=FALSE}
