@@ -12,7 +12,7 @@ website:
       - nfl_values.qmd
       - nfl_player_props.qmd
       - nfl_player_props_values.qmd
-      - nba_player_props.qmd
+      - nba_props.qmd
 
 format:
   html:
