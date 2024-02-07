@@ -12,5 +12,3 @@ print("NBA Props")
 img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/NBA_Player_Props.png"  
 knitr::include_graphics(img_url)
 ```
-
-NBA Props

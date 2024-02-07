@@ -7,6 +7,12 @@ execute:
 
 ## ottoneu Fantasy Baseball Tools
 
+```{r}
+library(lubridate)
+now <- as_datetime(parse_date_time((now(tz = "EST")), "Ymd HMS", truncated = 3))
+print(paste0("Refreshed: ", now))
+```
+
 ## League 1275
 
 #### Free Agent Hitters
