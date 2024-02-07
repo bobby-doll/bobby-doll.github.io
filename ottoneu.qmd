@@ -1,0 +1,239 @@
+---
+title: "ottoneu"
+execute:
+  echo: false
+  warning: false
+---
+
+## ottoneu Fantasy Baseball Tools
+
+## League 1275
+
+#### Free Agent Hitters
+
+```{r}
+library(httr)
+library(dplyr)
+library(rvest)
+library(jsonlite)
+library(tidyr)
+library(purrr)
+library(tidyverse)
+library(janitor)
+
+# urls and variables ---------------------------------------------------------------
+
+league_number <- "1275"
+rosters_url <- paste0("https://ottoneu.fangraphs.com/", league_number, "/rosterexport?csv=1")
+players_url <- "https://ottoneu.fangraphs.com/averageValues?export=csv"
+
+projection_systems <- c("atc", "zips", "steamer", "thebat", "thebatx")
+projection_systems1 <- c("atc", "zips", "steamer", "thebat")
+batter_metrics <- c("ab", "h", "r", "rbi", "hr", "sb")
+pitcher_metrics <- c("ip", "ha", "bb", "er", "k", "w", "sv")
+
+
+# hitter projections -----------------------------------------------------------------
+
+
+hitters_df <- data.frame(system = character(),
+                         player_name = character(),
+                         playerid = character(),
+                         ab = numeric(),
+                         h = numeric(),
+                         hr = numeric(),
+                         r = numeric(),
+                         rbi = numeric(),
+                         sb = numeric())
+
+
+for (i in projection_systems) {
+  hitter_url <- paste0("https://www.fangraphs.com/api/projections?type=", i,"&stats=bat&pos=all&team=0&players=0&lg=all")
+  hitters_list <- read_json(hitter_url)
+  df <- map_dfr(hitters_list, ~as.data.frame(t(unlist(.)))) |> 
+    clean_names() |>
+    select(c(player_name, playerid, minpos, team, ab, h, hr, r, rbi, sb)) |>
+    mutate_at(c('ab', 'h', 'hr', 'r', 'rbi', 'sb'), as.numeric) |>
+    mutate(avg = h / ab,
+           system = i)
+  hitters_df <- bind_rows(hitters_df, df)
+}
+
+hitter_values <- data.frame(player_name = character(),
+                            playerid = character(),
+                            dollars = double(),
+                            system = character())
+
+for (i in projection_systems) {
+  hitter_url <- paste0("https://www.fangraphs.com/api/fantasy/auction-calculator/data?teams=12&lg=MLB&dollars=400&mb=1&mp=5&msp=5&mrp=5&type=bat&players=&proj=", i,"&split=&points=c%7C0%2C1%2C2%2C3%2C4%7C0%2C1%2C2%2C3%2C4&rep=0&drp=0&pp=C%2CSS%2C2B%2C3B%2COF%2C1B&pos=1%2C1%2C1%2C1%2C5%2C1%2C1%2C0%2C0%2C1%2C5%2C5%2C0%2C17%2C0&sort=&view=0")
+  hitters_list_values <- fromJSON(hitter_url)
+  df <- as.data.frame(hitters_list_values$data) |>
+    clean_names() |>
+    select(c(player_name, playerid, dollars)) |>
+    mutate(system = i)
+  hitter_values <- bind_rows(hitter_values, df)
+}
+
+rosters_url <- paste0("https://ottoneu.fangraphs.com/", league_number, "/rosterexport?csv=1")
+players_url <- "https://ottoneu.fangraphs.com/averageValues?export=csv"
+
+rosters <- data.frame(read_csv(rosters_url)) |>
+  clean_names() |>
+  mutate(salary = as.integer(gsub("\\$", "", salary)),
+         fg_major_league_id = as.character(fg_major_league_id))
+
+players <- data.frame(read_csv(players_url)) |>
+  clean_names() |>
+  mutate(avg_salary = as.integer(gsub("\\$", "", avg_salary)),
+         fg_major_league_id = as.character(fg_major_league_id),
+         median_salary = as.integer(gsub("\\$", "", median_salary)),
+         last_10 = as.integer(gsub("\\$", "", last_10)))
+
+
+# final -------------------------------------------------------------------
+
+hitters <- left_join(hitters_df, hitter_values |> select(c(playerid, system, dollars)), 
+                     by = c("playerid"="playerid", "system" = "system")) |>
+  left_join(rosters |> select(c(fg_major_league_id, team_name, salary)), 
+            by = c("playerid" = "fg_major_league_id")) |>
+  mutate(team_name = ifelse(is.na(team_name), "Free Agent", team_name),
+         value = dollars - salary) |>
+  left_join(players |> select(fg_major_league_id, avg_salary, last_10, roster, position_s), 
+            by = c("playerid" = "fg_major_league_id")) |>
+  rename("position" = "position_s") |>
+  select(-minpos)
+
+# free agents -------------------------------------------------------------
+
+hitters_fa <- hitters |>
+  filter(team_name == "Free Agent") |>
+  mutate(position_group = case_when(grepl("OF", position) ~ "OF",
+                                    grepl("2B", position) ~ "MI",
+                                    grepl("SS", position) ~ "MI",
+                                    grepl("3B", position) ~ "CI",
+                                    grepl("1B", position) ~ "CI",
+                                    grepl("C", position) ~ "C",
+                                    TRUE ~ position)) |>
+  group_by(position_group, playerid) |>
+  summarize(dollars_avg = mean(dollars, na.rm = TRUE)) |>
+  group_by(position_group) |>
+  mutate(position_group_rank = rank(-dollars_avg)) |>
+  ungroup() |>
+  select(c(playerid, dollars_avg, position_group, position_group_rank)) |>
+  left_join(hitters, by = "playerid", relationship = "many-to-many") |>
+  mutate(position_roup_rank = paste0(position_group, position_group_rank),
+         starting = case_when(position_group == "C" & position_group_rank == 1 ~ 1,
+                              position_group == "CI" & position_group_rank <= 2 ~ 1,
+                              position_group == "MI" & position_group_rank <= 3 ~ 1,
+                              position_group == "OF" & position_group_rank <= 5 ~ 1,
+                              position_group == "DH" & position_group_rank == 1 ~ 1,
+                              TRUE ~ 0)) |>
+  group_by(player_name, playerid, position_group, position_group_rank, position) |>
+  summarize(ab = mean(ab),
+            h = mean(h),
+            hr = mean(hr),
+            r = mean(r),
+            rbi = mean(rbi),
+            sb = mean(sb),
+            dollars = mean(dollars_avg)) |>
+  ungroup() |>
+  mutate(avg = h / ab) |>
+  arrange(desc(dollars)) |>
+  rowwise() %>%
+  mutate(
+    catcher = ifelse(grepl("C", position), "C", ""),
+    first = ifelse(grepl("1B", position), "CI", ""),
+    third = ifelse(grepl("3B", position), "CI", ""),
+    second = ifelse(grepl("2B", position), "MI", ""),
+    shortstop = ifelse(grepl("SS", position), "MI", ""),
+    outfield = ifelse(grepl("OF", position), "OF", ""),
+    ut = ifelse(grepl("UT", position), "UT", ""),
+    position_group2 = trimws(paste(
+      catcher, first, second, shortstop, third, outfield, ut,
+      collapse = "/"
+    ))
+  ) |>
+  ungroup() |>
+  mutate(position_group2 = trimws(gsub(" ", "/", position_group2)),
+         position_group2 = gsub("///", "/", position_group2),
+         position_group2 = gsub("//", "/", position_group2),
+         position_group2 = gsub("//", "/", position_group2),
+         position_group2 = gsub("//", "/", position_group2),
+         position_group2 = gsub("MI/MI", "MI", position_group2),
+         position_group2 = gsub("CI/CI", "CI", position_group2),
+         position_group = position_group2) |>
+  select(-c(catcher, first, third, shortstop, second, outfield, ut, position_group2)) |>
+  select(c(player_name, position_group, position_group_rank, position, dollars, h, hr, r, rbi, sb, avg, ab)) |>
+  mutate(hr_rate = hr / ab,
+         r_rate = r/ab,
+         rbi_rate = rbi/ab,
+         sb_rate = sb/ab)
+
+####### hitters free agent reactable
+
+library(reactable)
+
+hitters_react <- hitters_fa |> filter(!is.nan(dollars))
+coloring <- function(x) rgb(colorRamp(c("red", "white", "green"))(x), maxColorValue = 255)
+
+# Define the table
+reactable(
+  hitters_react,
+  columns = list(
+    player_name = colDef(name = "Player", minWidth = 170, filterable = TRUE),
+    position_group = colDef(name = "Position Group", minWidth = 90, filterable = TRUE),
+    position_group_rank = colDef(name = "Rank", align = "center"),
+    position = colDef(name = "Position", minWidth = 100, filterable = TRUE),
+    dollars = colDef(name = "$$", align = "center",
+                     style = function(value) {
+                       normalized <- (value - min(hitters_react$dollars)) / (max(hitters_react$dollars) - min(hitters_react$dollars))
+                       color <- coloring(normalized)
+                       list(background = color)
+                     }),
+    h = colDef(name = "Hits", align = "center",
+               style = function(value) {
+                 normalized <- (value - min(hitters_react$h)) / (max(hitters_react$h) - min(hitters_react$h))
+                 color <- coloring(normalized)
+                 list(background = color)
+               }),
+    hr = colDef(name = "HR", align = "center",
+                style = function(value) {
+                  normalized <- (value - min(hitters_react$hr)) / (max(hitters_react$hr) - min(hitters_react$hr))
+                  color <- coloring(normalized)
+                  list(background = color)
+                }),
+    r = colDef(name = "Runs", align = "center",
+               style = function(value) {
+                 normalized <- (value - min(hitters_react$r)) / (max(hitters_react$r) - min(hitters_react$r))
+                 color <- coloring(normalized)
+                 list(background = color)
+               }),
+    rbi = colDef(name = "RBI", align = "center",
+                 style = function(value) {
+                   normalized <- (value - min(hitters_react$rbi)) / (max(hitters_react$rbi) - min(hitters_react$rbi))
+                   color <- coloring(normalized)
+                   list(background = color)
+                 }),
+    sb = colDef(name = "SB", align = "center",
+                style = function(value) {
+                  normalized <- (value - min(hitters_react$sb)) / (max(hitters_react$sb) - min(hitters_react$sb))
+                  color <- coloring(normalized)
+                  list(background = color)
+                }),
+    avg = colDef(name = "Avg", align = "center", format = colFormat(digits = 3),
+                 style = function(value) {
+                   normalized <- (value - min(hitters_react$avg)) / (max(hitters_react$avg) - min(hitters_react$avg))
+                   color <- coloring(normalized)
+                   list(background = color)
+                 }),
+    ab = colDef(name = "AB", align = "center"),
+    hr_rate = colDef(name = "HR Rate", align = "center", format = colFormat(percent = TRUE, digits = 1)),
+    r_rate = colDef(name = "R Rate", align = "center", format = colFormat(percent = TRUE, digits = 1)),
+    rbi_rate = colDef(name = "RBI Rate", align = "center", format = colFormat(percent = TRUE, digits = 1)),
+    sb_rate = colDef(name = "SB Rate", align = "center", format = colFormat(percent = TRUE, digits = 1))
+  ),
+  defaultColDef = colDef(minWidth = 62, format = colFormat(digits = 0)),
+  defaultPageSize = 100,
+  style = list(fontFamily = "Work Sans, sans-serif")
+)
+```
