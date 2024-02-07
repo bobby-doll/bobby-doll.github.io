@@ -24,8 +24,16 @@ library(tidyr)
 library(purrr)
 library(tidyverse)
 library(janitor)
+library(reactable)
 
 players_url <- "https://ottoneu.fangraphs.com/averageValues?export=csv"
+
+players <- data.frame(read_csv(players_url)) |>
+  clean_names() |>
+  mutate(avg_salary = as.integer(gsub("\\$", "", avg_salary)),
+         fg_major_league_id = as.character(fg_major_league_id),
+         median_salary = as.integer(gsub("\\$", "", median_salary)),
+         last_10 = as.integer(gsub("\\$", "", last_10)))
 
 projection_systems <- c("atc", "zips", "steamer", "thebat", "thebatx")
 projection_systems1 <- c("atc", "zips", "steamer", "thebat")
