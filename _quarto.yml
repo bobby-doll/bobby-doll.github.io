@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "betting and fantasy sports (beta)"
+  title: "betting"
   navbar:
     left:
       - href: index.qmd
