@@ -4,9 +4,7 @@ execute:
   echo: false
 ---
 
-```{r, echo=FALSE}
-print("NBA Props")
-```
+# NBA Props
 
 ```{r, echo=FALSE}
 img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/NBA_Player_Props.png"  
