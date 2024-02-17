@@ -481,7 +481,9 @@ free_agent_pitchers <- function(league_id){
                      reactable(risk_data_1, outlined = TRUE,
                                columns = list(
                                  era = colDef(name = "era", format = colFormat(digits = 2)),
-                                 whip = colDef(name = "era", format = colFormat(digits = 2))
+                                 whip = colDef(name = "whip", format = colFormat(digits = 2)),
+                                 k_9 = colDef(name = "K/9", format = colFormat(digits = 1)),
+                                 k_bb = colDef(name = "K-BB", format = colFormat(digits = 1))
                                ),
                                defaultColDef = colDef(maxWidth = 80, format = colFormat(digits = 0)))
       )
