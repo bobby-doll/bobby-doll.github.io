@@ -1,0 +1,12 @@
+---
+title: "MLB Props"
+execute:
+  echo: false
+---
+
+# MLB Props
+
+```{r, echo=FALSE}
+img_url <- "https://raw.githubusercontent.com/bdidds2/Betting/main/MLB_Player_Props.png"  
+knitr::include_graphics(img_url)
+```

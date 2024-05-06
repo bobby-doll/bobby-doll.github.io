@@ -1,0 +1,95 @@
+---
+title: My first Quarto Dashboard
+quarto::html_document:
+  html_extensions: [".html", ".qmd"]
+  params:
+    number: 1275
+    text: "Dani Rojas"
+# JavaScript execution flag is not necessary for this functionality
+---
+
+```{r include=FALSE}
+# Load your R script containing the function
+source("ottoneu_functions.R")
+```
+
+```{r}
+library(quarto)
+
+# Define the createReactable function
+createReactable <- function(number = 1275, text = "Dani Rojas") {
+  # Update the parameters
+  params$number <- number
+  params$text <- text
+  
+  # Call the R function to generate the Reactable with updated parameters
+  top_fa_hitters_reactable(params$number, params$text)
+}
+
+```
+
+```{r}
+# Define a function to create the user input section
+cat("Enter a number and text below to update the Reactable.\n\n")
+cat("Number: <input type='number' id='inputNumber' value='{{params$number}}' oninput='createReactable(this.value)'>\n\n")
+cat("Text: <input type='text' id='inputText' value='{{params$text}}' oninput='createReactable(this.value, document.getElementById(\"inputNumber\").value)'>\n\n")
+
+```
+
+```{=html}
+<div id="reactable-container">
+</div>
+
+<div id="user-input">
+  <label for="inputNumber">Number:</label>
+  <input type="number" id="inputNumber" value="{{params$number}}">
+  <br>
+  <label for="inputText">Text:</label>
+  <input type="text" id="inputText" value="{{params$text}}">
+  <br>
+  <button onclick="createReactable()">Submit</button>
+</div>
+```
+
+```{r}
+# Load your R script containing the function
+source("ottoneu_functions.R")
+
+# Manually define the 'params' object
+params <- list(
+  number = 1275,  # Initial value for number
+  text = "Dani Rojas"  # Initial value for text
+)
+
+# Define the createReactable function
+createReactable <- function() {
+  # Get the input values using JavaScript
+  # This function will be called from the HTML code chunk
+  
+  # Call the function to generate the Reactable
+  reactable_output <- top_fa_hitters_reactable(params$number, params$text)
+  
+  # Render the Reactable output directly within the HTML code chunk
+  cat(reactable_output)
+}
+
+```
+
+```{html}
+<script>
+// Define the createReactable function
+function createReactable() {
+  // Get the input values using JavaScript
+  const number = document.getElementById('inputNumber').value;
+  const text = document.getElementById('inputText').value;
+
+  // Update the parameters
+  quarto.params.number = number;
+  quarto.params.text = text;
+
+  // Re-render the document to generate the Reactable
+  quarto.quarto_render();
+}
+</script>
+
+```

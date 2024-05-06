@@ -32,7 +32,7 @@
     "href": "EPL.html",
     "title": "Soccer",
     "section": "",
-    "text": "English Premier League\n\n\n\n\n\n\n\nBundesliga\n\n\n\n\n\n\n\nLa Liga"
+    "text": "English Premier League\n\n\n\n\n\n\n\n\n\n\n\nBundesliga\n\n\n\n\n\n\n\n\n\n\n\nLa Liga"
   },
   {
     "objectID": "nba_player_props.html",
@@ -67,14 +67,14 @@
     "href": "ottoneu.html",
     "title": "ottoneu",
     "section": "",
-    "text": "[1] \"Refreshed: 2024-03-02 08:44:27.226076\""
+    "text": "[1] \"Refreshed: 2024-03-09 06:56:37.748381\""
   },
   {
     "objectID": "ottoneu.html#ottoneu-fantasy-baseball-tools",
     "href": "ottoneu.html#ottoneu-fantasy-baseball-tools",
     "title": "ottoneu",
     "section": "",
-    "text": "[1] \"Refreshed: 2024-03-02 08:44:27.226076\""
+    "text": "[1] \"Refreshed: 2024-03-09 06:56:37.748381\""
   },
   {
     "objectID": "ottoneu.html#league-1023",
@@ -103,5 +103,12 @@
     "title": "My first Quarto Dashboard",
     "section": "",
     "text": "library(quarto)\n\n# Define the createReactable function\ncreateReactable &lt;- function(number = 1275, text = \"Dani Rojas\") {\n  # Update the parameters\n  params$number &lt;- number\n  params$text &lt;- text\n  \n  # Call the R function to generate the Reactable with updated parameters\n  top_fa_hitters_reactable(params$number, params$text)\n}\n\n\n# Define a function to create the user input section\ncat(\"Enter a number and text below to update the Reactable.\\n\\n\")\n\nEnter a number and text below to update the Reactable.\n\ncat(\"Number: &lt;input type='number' id='inputNumber' value='{{params$number}}' oninput='createReactable(this.value)'&gt;\\n\\n\")\n\nNumber: &lt;input type='number' id='inputNumber' value='{{params$number}}' oninput='createReactable(this.value)'&gt;\n\ncat(\"Text: &lt;input type='text' id='inputText' value='{{params$text}}' oninput='createReactable(this.value, document.getElementById(\\\"inputNumber\\\").value)'&gt;\\n\\n\")\n\nText: &lt;input type='text' id='inputText' value='{{params$text}}' oninput='createReactable(this.value, document.getElementById(\"inputNumber\").value)'&gt;\n\n\n\n\n\n\n  Number:\n  \n  \n  Text:\n  \n  \n  Submit\n\n\n# Load your R script containing the function\nsource(\"ottoneu_functions.R\")\n\nRows: 1169 Columns: 12\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (9): Name, FG MinorLeagueID, MLB Org, Position(s), Avg Salary, Median Sa...\ndbl (3): OttoneuID, FG MajorLeagueID, Roster%\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n# Manually define the 'params' object\nparams &lt;- list(\n  number = 1275,  # Initial value for number\n  text = \"Dani Rojas\"  # Initial value for text\n)\n\n# Define the createReactable function\ncreateReactable &lt;- function() {\n  # Get the input values using JavaScript\n  # This function will be called from the HTML code chunk\n  \n  # Call the function to generate the Reactable\n  reactable_output &lt;- top_fa_hitters_reactable(params$number, params$text)\n  \n  # Render the Reactable output directly within the HTML code chunk\n  cat(reactable_output)\n}\n\n\n&lt;script&gt;\n// Define the createReactable function\nfunction createReactable() {\n  // Get the input values using JavaScript\n  const number = document.getElementById('inputNumber').value;\n  const text = document.getElementById('inputText').value;\n\n  // Update the parameters\n  quarto.params.number = number;\n  quarto.params.text = text;\n\n  // Re-render the document to generate the Reactable\n  quarto.quarto_render();\n}\n&lt;/script&gt;"
+  },
+  {
+    "objectID": "mlb_props.html",
+    "href": "mlb_props.html",
+    "title": "MLB Props",
+    "section": "",
+    "text": "MLB Props"
   }
 ]

@@ -13,7 +13,7 @@ website:
       - nfl_player_props.qmd
       - nfl_player_props_values.qmd
       - nba_props.qmd
-      - ottoneu.qmd
+      - mlb_props.qmd
 
 format:
   html:
